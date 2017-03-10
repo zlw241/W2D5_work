@@ -43,9 +43,7 @@ class HashMap
   def each(&prc)
     @store.each do |bucket|
       bucket.each do |link|
-        unless link.nil?
-          prc.call(link.key, link.val)
-        end
+        prc.call(link.key, link.val)
       end
     end
   end

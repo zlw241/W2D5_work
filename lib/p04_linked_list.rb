@@ -27,7 +27,8 @@ class LinkedList
   def initialize
     @head = Link.new
     @tail = Link.new
-    @current = head
+    head.next = tail
+    tail.prev = head
   end
 
   def [](i)
@@ -44,7 +45,7 @@ class LinkedList
   end
 
   def empty?
-    current == head
+    head.next == tail
   end
 
   def get(key)
@@ -61,14 +62,14 @@ class LinkedList
   end
 
   def append(key, val)
-    # debugger
     new_link = Link.new(key, val)
-    new_link.prev = current
-    current.next = new_link
+    new_link.prev = tail.prev#current
+    tail.prev.next = new_link
+    # head.next = new_link
+    tail.prev = new_link
     new_link.next = tail
-    self.current = new_link
-    tail.prev = current
-    # debugger
+    # self.current = new_link
+    # tail.prev = current
   end
 
   def update(key, val)
