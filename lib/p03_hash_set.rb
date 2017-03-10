@@ -1,7 +1,7 @@
 require_relative 'p02_hashing'
 
 class HashSet
-  attr_reader :count, :store
+  attr_reader :count
 
   def initialize(num_buckets = 8)
     @store = Array.new(num_buckets) { Array.new }
@@ -9,27 +9,28 @@ class HashSet
   end
 
   def insert(key)
-    resize! if count == num_buckets
-    @store[key_hash(key)] << key
-    @count += 1
+    resize! if count >= num_buckets
+    unless include?(key)
+      self[key] << key
+      self.count += 1
+    end
   end
 
   def include?(key)
-    store[key_hash(key)].each do |k|
+    self[key].each do |k|
       return true if k == key
     end
     false
   end
 
   def remove(key)
-    store[key_hash(key)].delete(key)
+    self[key].delete(key)
+    self.count -= 1
   end
 
   private
-
-  def key_hash(key)
-    key.hash % num_buckets
-  end
+  attr_writer :count
+  attr_accessor :store
 
   def [](num)
     @store[num.hash % num_buckets]
@@ -41,10 +42,12 @@ class HashSet
   end
 
   def resize!
-    flat_store = store.flatten
-    bigger_store = Array.new(num_buckets * 2) { Array.new }
-    @store = bigger_store
-    @count = 0
-    flat_store.each { |el| insert(el) }
+    old_store = store
+    self.store = Array.new(num_buckets * 2) { [] }
+    old_store.each do |bucket|
+      bucket.each do |el|
+        self[el] << el
+      end
+    end
   end
 end
