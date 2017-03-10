@@ -1,7 +1,7 @@
 require 'rspec'
 require 'p05_hash_map'
 
-describe HashMap do
+describe HashMap do 
   let(:hash) do
     hash = HashMap.new
     hash.set(:first, 1)

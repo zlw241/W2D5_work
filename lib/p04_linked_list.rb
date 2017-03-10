@@ -49,7 +49,7 @@ class LinkedList
 
   def get(key)
     self.each do |link|
-      return link.val  if link.key == key
+      return link.val if link.key == key
     end
   end
 
@@ -95,26 +95,13 @@ class LinkedList
 
   def each(&prc)
     idx = head
-    # while idx.next != nil
-    #   # prc.call(p idk)
-    #   prc.call(idx)
-    #   idx = idx.next
-    #
-    # end
-
     until idx == last
       idx = idx.next
       prc.call(idx)
-      # idx = idx.next
-
-
     end
-    # prc.call(idx)
-
   end
 
-  # uncomment when you have `each` working and `Enumerable` included
-  # def to_s
-  #   inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
-  # end
+  def to_s
+    inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
+  end
 end
