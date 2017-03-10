@@ -51,11 +51,3 @@ class Hash
     (sum ** 2).to_s[1..-1].to_i
   end
 end
-
-
-p "hello".hash
-p "helli".hash
-p "goodbye".hash
-p 1.hash
-p 1.hash
-p 1.hash
